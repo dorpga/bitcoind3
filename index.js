@@ -24,6 +24,7 @@ function updateData() {
       } else {
         var r = JSON.parse(body);
         data[market.coin][market.exchange] = r.result;
+        console.log(data)
       }
     })
   })
@@ -34,7 +35,7 @@ function sendUpdate(socket) {
 
   setInterval(function() {
     socket.emit('update', data)
-  }, 10000);
+  }, 100000);
 }
 
 updateData()

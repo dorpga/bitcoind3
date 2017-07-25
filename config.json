@@ -1,6 +1,9 @@
 {
   "api": "https://api.cryptowat.ch",
   "markets": [
-    {"coin": "btc", "exchange": "coinbase"}
+    {"coin": "btc", "exchange": "kraken"},
+    {"coin": "eth", "exchange": "kraken"},
+    {"coin": "ltc", "exchange": "kraken"},
+    {"coin": "etc", "exchange": "kraken"}
   ]
 }
