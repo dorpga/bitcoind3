@@ -1,0 +1,6 @@
+{
+  "api": "https://api.cryptowat.ch",
+  "markets": [
+    {"coin": "btc", "exchange": "coinbase"}
+  ]
+}
