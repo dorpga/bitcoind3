@@ -1,5 +1,5 @@
 {
-  "api": "http://api.cryptowat.ch",
+  "api": "https://api.cryptowat.ch",
   "markets": [
     {"coin": "btc", "exchange": "kraken"},
     {"coin": "eth", "exchange": "kraken"},

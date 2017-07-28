@@ -2,17 +2,8 @@ function $(s) {
   return document.querySelector(s);
 }
 
-var socket = io.connect('http://localhost:8001');
-
-var data = {};
-
-socket.on('update', update)
-
-function update(d) {
-  data = d
-  console.log(data)
-  updateGraph()
-}
+var config
+var data = {}
 
 var color = d3.scaleOrdinal(d3.schemeCategory10);
 
@@ -40,9 +31,33 @@ var svg = d3.select("body").append("svg")
   .attr("transform",
     "translate(" + margin.left + "," + margin.top + ")");
 
-function updateGraph() {
+aja()
+  .url('config.json')
+  .on('success', init)
+  .go()
 
-  // TODO: Make it graph all coins and exchanges
+function init(response) {
+  config = response
+
+  update()
+  setInterval(update, 100000)
+}
+
+function update() {
+  config.markets.forEach(function(market) {
+    aja()
+      .url(`/coin/${market.coin}`)
+      .on('success', function(coinData) {
+        data[market.coin] = coinData
+      })
+      .go()
+  })
+
+  // HACK: Wait 1 second before showing graph instead of checking AJAX
+  setTimeout(updateGraph, 1000)
+}
+
+function updateGraph() {
 
   // set the ranges
   var x = d3.scaleTime().range([0, width]);
@@ -62,7 +77,7 @@ function updateGraph() {
   Object.keys(data).forEach(function(name, c) {
     lColors.push(color(c))
     lNames.push(name)
-    var i = data[name].kraken
+    var i = data[name]
     i.forEach(function(d) {
       d.time = new Date(d.time * 1000).toISOString();
     });
